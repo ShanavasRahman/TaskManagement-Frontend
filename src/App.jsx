@@ -4,8 +4,6 @@ import Login from "./Components/Login";
 import { createBrowserRouter, Outlet } from "react-router-dom";
 import Home from "./Components/Home";
 import Signup from "./Components/Signup";
-import Header from "./Components/Header";
-import Footer from "./Components/Footer";
 import  UserContext from "./utils/userContext";
 import Dashboard from "./Components/Dashboard";
 
