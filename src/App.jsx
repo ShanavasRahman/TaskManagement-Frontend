@@ -7,6 +7,7 @@ import Signup from "./Components/Signup";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 import  UserContext from "./utils/userContext";
+import Dashboard from "./Components/Dashboard";
 
 function App() {
   const [details, setDetails] = useState({
@@ -43,6 +44,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/signup",
         element: <Signup />,
+      },
+      {
+        path: "/dashboard",
+        element: <Dashboard />,
       },
     ],
   },

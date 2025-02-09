@@ -47,7 +47,7 @@ const Home = () => {
         </p>
 
         <div className='mt-6'>
-          <Link to='/tasks'>
+          <Link to='/dashboard'>
             <button className='px-5 py-2 sm:px-6 sm:py-3 bg-green-600 text-white font-poppins font-semibold rounded-lg hover:bg-green-700 transition-colors shadow-md'>
               Go to Dashboard
             </button>
