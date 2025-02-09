@@ -1,32 +1,47 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 import toast from 'react-hot-toast';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Signup = () => {
-    const newUser = {
+    const userDetails = {
         name: "",
         email: "",
         password: "",
         confirmPassword:""
     }
-    const [user, setUser] = useState(newUser);
+    const [user, setUser] = useState(userDetails);
 
     const handleInput = (e) => {
         setUser({ ...user, [e.target.name]: e.target.value });
     }
-
+    const navigate = useNavigate();
     const handleSubmit = async (e) => {
+        e.preventDefault();
+    
         try {
-            e.preventDefault()
-            if (user.password != user.confirmPassword) {
-               return toast.error("Please type same password")
+            if (user.password !== user.confirmPassword) {
+                return toast.error("Passwords do not match", { position: "top-right" });
             }
-            const response=await axios.post("http://localhost:3000/login/signup")
-        } catch (error) {
+    
+            const newUser = {
+                name: user.name,
+                email: user.email,
+                password: user.password
+            };
+    
+            const response = await axios.post("http://localhost:3000/signup", newUser);
+    
+            toast.success(response.data.message, { position: "top-right" });
+            navigate("/");
             
+        } catch (error) {
+            console.error("Signup Error:", error.response?.data || error.message);
+    
+            toast.error(error.response?.data?.message || "Something went wrong", { position: "top-right" });
         }
-    }
+    };
+    
     return (
         <div className="flex min-h-screen items-center justify-center bg-gray-900 px-4">
           <div className="w-full max-w-md bg-white/10 backdrop-blur-lg border border-white/20 shadow-xl rounded-2xl p-6">
@@ -37,8 +52,7 @@ const Signup = () => {
               Sign up to get started
             </p>
     
-            <form className="mt-6 space-y-4" >
-              {/* Name */}
+            <form className="mt-6 space-y-4" onSubmit={handleSubmit} >
               <div>
                 <label className="text-gray-300 text-sm">Name</label>
                 <input
@@ -51,7 +65,6 @@ const Signup = () => {
                 />
               </div>
     
-              {/* Email */}
               <div>
                 <label className="text-gray-300 text-sm">Email</label>
                 <input
@@ -64,7 +77,6 @@ const Signup = () => {
                 />
               </div>
     
-              {/* Password */}
               <div>
                 <label className="text-gray-300 text-sm">Password</label>
                 <input
@@ -77,7 +89,6 @@ const Signup = () => {
                 />
               </div>
     
-              {/* Confirm Password */}
               <div>
                 <label className="text-gray-300 text-sm">Confirm Password</label>
                 <input
@@ -90,7 +101,6 @@ const Signup = () => {
                 />
               </div>
     
-              {/* Submit Button */}
               <button
                 type="submit"
                 className="w-full bg-blue-600 hover:bg-blue-700 transition-all text-white font-medium py-2 rounded-lg shadow-md">

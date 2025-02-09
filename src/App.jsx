@@ -1,12 +1,30 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./index.css";
 import Login from "./Components/Login";
 import { createBrowserRouter, Outlet } from "react-router-dom";
 import Home from "./Components/Home";
 import Signup from "./Components/Signup";
+import Header from "./Components/Header";
+import Footer from "./Components/Footer";
+import  UserContext from "./utils/userContext";
 
 function App() {
-  return <Outlet />;
+  const [details, setDetails] = useState({
+    userId: "",
+    userName:"",
+    role: "",
+  });
+  useEffect(() => {
+    const storedData = sessionStorage.getItem("userDetails")
+    setDetails(JSON.parse(storedData));
+  }, [])
+  
+
+  return (
+    <UserContext.Provider value={{details,setDetails}}>
+      <Outlet /> 
+    </UserContext.Provider>
+  );
 }
 
 const appRouter = createBrowserRouter([
@@ -16,15 +34,15 @@ const appRouter = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Login />,
+        element: <Home />,
+      },
+      {
+        path: "/login",
+        element: <Login />
       },
       {
         path: "/signup",
         element: <Signup />,
-      },
-      {
-        path: "/home",
-        element: <Home />,
       },
     ],
   },

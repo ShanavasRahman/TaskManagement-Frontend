@@ -1,7 +1,8 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
+import UserContext from "../utils/userContext";
 
 const Login = () => {
   const userDetails = {
@@ -18,6 +19,8 @@ const Login = () => {
  };
     
     const navigate = useNavigate();
+    const { setDetails, details } = useContext(UserContext);
+    console.log(details);
     const handleSubmit = async (e) => {
         e.preventDefault(); 
       
@@ -25,13 +28,12 @@ const Login = () => {
           const response = await axios.post("http://localhost:3000/login", user, {
             withCredentials: true, 
           });
-      
-            toast.success(response.data.message, { position: "top-right" });
             
-            navigate("/home");
-      
-          console.log("Login successful:", response.data);
-          
+            setDetails(response.data.user);      
+            sessionStorage.setItem("userDetails", JSON.stringify(response.data.user));
+            toast.success(response.data.message, { position: "top-right" });
+            navigate("/");
+                
         } catch (error) {
           if (error.response) {
             toast.error(error.response.data.message || "Login failed!", { position: "top-right" });
