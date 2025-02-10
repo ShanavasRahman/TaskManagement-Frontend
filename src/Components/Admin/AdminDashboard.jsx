@@ -12,7 +12,7 @@ const AdminDashboard = () => {
   const [showTaskModal, setShowTaskModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
 
-  const { details } = useContext(UserContext);
+  const { details,setDetails } = useContext(UserContext);
   const isAuthenticate = useAuth();
 
   useEffect(() => {
@@ -63,6 +63,11 @@ const AdminDashboard = () => {
       withCredentials: true,
     });
     sessionStorage.removeItem("userDetails");
+    setDetails({
+      userId: "",
+      userName: "",
+      role: "",
+    });
     toast.success(response.data.message, { position: "top-right" });
     navigate("/login");
   };

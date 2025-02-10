@@ -54,7 +54,7 @@ const Signup = () => {
             const response = await axios.post("http://localhost:3000/signup", newUser);
 
             toast.success(response.data.message, { position: "top-right" });
-            navigate("/");
+            navigate("/login");
         } catch (error) {
             console.error("Signup Error:", error.response?.data || error.message);
             toast.error(error.response?.data?.message || "Something went wrong", { position: "top-right" });

@@ -7,7 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const UserDashboard = () => {
   const [tasks, setTasks] = useState([]);
-  const { details } = useContext(UserContext);
+  const { details,setDetails } = useContext(UserContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [taskToDelete, setTaskToDelete] = useState(null);
@@ -107,11 +107,17 @@ const UserDashboard = () => {
   };
 
   const navigate = useNavigate();
+
   const handleLogout = async () => {
     const response = await axios.get("http://localhost:3000/logout", {
       withCredentials: true,
     });
     sessionStorage.removeItem("userDetails");
+    setDetails({
+      userId: "",
+      userName:"",
+      role: "",
+    })
     toast.success(response.data.message, { position: "top-right" });
     navigate("/login");
   };

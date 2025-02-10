@@ -3,12 +3,14 @@ import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import UserContext from "../utils/userContext";
+import useAuth from "../utils/useAuth";
 
 const Login = () => {
   const userDetails = {
     email: "",
     password: "",
-  };
+    };
+    
 
   const [user, setUser] = useState(userDetails);
 
@@ -18,9 +20,8 @@ const Login = () => {
     setUser({ ...user, [name]: value });
   };
 
-  const navigate = useNavigate();
-  const { setDetails, details } = useContext(UserContext);
-  console.log(details);
+    const navigate = useNavigate();
+  const { setDetails } = useContext(UserContext);
   const handleSubmit = async (e) => {
     e.preventDefault();
 

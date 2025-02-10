@@ -6,7 +6,6 @@ import UserContext from "../utils/userContext";
 
 const Home = () => {
     const { details } = useContext(UserContext);
-    console.log(details);
 
   // If details are not available (i.e., user is not logged in)
   if (!details || !details.userId) {
@@ -34,7 +33,6 @@ const Home = () => {
     );
   }
 
-  // If details are available (i.e., user is logged in)
   return (
     <div className='min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-gray-900 to-gray-800 px-4 sm:px-6 lg:px-8'>
       <div className='w-full max-w-2xl text-center bg-gray-800 p-6 sm:p-8 rounded-2xl shadow-lg border border-gray-700'>

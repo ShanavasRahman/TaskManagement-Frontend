@@ -14,7 +14,6 @@ const useAuth = () => {
         "http://localhost:3000/protected",
         { withCredentials: true }
       );
-      console.log(response);
       if (response) {
         setIsAuthenticate(true);
       }
