@@ -6,6 +6,7 @@ import Home from "./Components/Home";
 import Signup from "./Components/Signup";
 import  UserContext from "./utils/userContext";
 import Dashboard from "./Components/Dashboard";
+import UserDashboard from "./Components/User/UserDashboard";
 
 function App() {
   const [details, setDetails] = useState({
@@ -46,6 +47,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/dashboard",
         element: <Dashboard />,
+      },
+      {
+        path: "/userdashboard/:userId",
+        element: <UserDashboard />,
       },
     ],
   },
