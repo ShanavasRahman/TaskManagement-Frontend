@@ -25,7 +25,7 @@ const UserDashboard = () => {
     const fetchTasks = async () => {
       try {
         const response = await axios.post(
-          "https://task-management-backend-eight-kappa.vercel.app/displaytask",
+          "https://taskmanagement-backend-iv84.onrender.com/displaytask",
           { id },
           { withCredentials: true }
         );
@@ -52,7 +52,7 @@ const UserDashboard = () => {
     try {
       if (editingTaskId) {
         await axios.put(
-          `https://task-management-backend-eight-kappa.vercel.app/updatetask/${editingTaskId}`,
+          `https://taskmanagement-backend-iv84.onrender.com/updatetask/${editingTaskId}`,
           { ...newTask, userId: id },
           { withCredentials: true }
         );
@@ -63,7 +63,7 @@ const UserDashboard = () => {
         );
       } else {
         const response = await axios.post(
-          "https://task-management-backend-eight-kappa.vercel.app/addtask",
+          "https://taskmanagement-backend-iv84.onrender.com/addtask",
           { ...newTask, userId: id },
           { withCredentials: true }
         );
@@ -80,7 +80,7 @@ const UserDashboard = () => {
 
   const handleDeleteTask = async () => {
     try {
-      await axios.delete(`https://task-management-backend-eight-kappa.vercel.app/deletetask/${taskToDelete}`, {
+      await axios.delete(`https://taskmanagement-backend-iv84.onrender.com/deletetask/${taskToDelete}`, {
         withCredentials: true,
       });
       setTasks(tasks.filter((task) => task._id !== taskToDelete));
@@ -109,7 +109,7 @@ const UserDashboard = () => {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    const response = await axios.get("https://task-management-backend-eight-kappa.vercel.app/logout", {
+    const response = await axios.get("https://taskmanagement-backend-iv84.onrender.com/logout", {
       withCredentials: true,
     });
     sessionStorage.removeItem("userDetails");

@@ -11,7 +11,7 @@ const useAuth = () => {
   const fetchProtected = async () => {
     try {
       const response = await axios.get(
-        "https://task-management-backend-eight-kappa.vercel.app/protected",
+        "https://taskmanagement-backend-iv84.onrender.com/protected",
         { withCredentials: true }
       );
       if (response) {
