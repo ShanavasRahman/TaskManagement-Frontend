@@ -9,6 +9,8 @@ const UserDashboard = () => {
   const [tasks, setTasks] = useState([]);
   const { details } = useContext(UserContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [taskToDelete, setTaskToDelete] = useState(null);
   const [editingTaskId, setEditingTaskId] = useState(null);
   const [newTask, setNewTask] = useState({
     title: "",
@@ -18,6 +20,7 @@ const UserDashboard = () => {
   });
 
   const id = details?.userId;
+
   useEffect(() => {
     const fetchTasks = async () => {
       try {
@@ -36,6 +39,16 @@ const UserDashboard = () => {
   }, [id]);
 
   const handleAddOrEditTask = async () => {
+    if (newTask.title.length > 30) {
+      toast.error("Title must be within 30 characters.", { position: "top-right" });
+      return;
+    }
+
+    if (newTask.description.length > 100) {
+      toast.error("Description must be within 100 characters.", { position: "top-right" });
+      return;
+    }
+
     try {
       if (editingTaskId) {
         await axios.put(
@@ -65,12 +78,14 @@ const UserDashboard = () => {
     }
   };
 
-  const handleDeleteTask = async (taskId) => {
+  const handleDeleteTask = async () => {
     try {
-      await axios.delete(`http://localhost:3000/deletetask/${taskId}`, {
+      await axios.delete(`http://localhost:3000/deletetask/${taskToDelete}`, {
         withCredentials: true,
       });
-      setTasks(tasks.filter((task) => task._id !== taskId));
+      setTasks(tasks.filter((task) => task._id !== taskToDelete));
+      setIsDeleteModalOpen(false);
+      setTaskToDelete(null);
     } catch (error) {
       console.error("Error deleting task:", error);
     }
@@ -92,7 +107,7 @@ const UserDashboard = () => {
   };
 
   const navigate = useNavigate();
-  const handleLogout = async (e) => {
+  const handleLogout = async () => {
     const response = await axios.get("http://localhost:3000/logout", {
       withCredentials: true,
     });
@@ -159,7 +174,10 @@ const UserDashboard = () => {
                       Edit
                     </button>
                     <button
-                      onClick={() => handleDeleteTask(task._id)}
+                      onClick={() => {
+                        setTaskToDelete(task._id);
+                        setIsDeleteModalOpen(true);
+                      }}
                       className='px-3 py-1 bg-red-600 hover:bg-red-700 rounded text-white font-medium'>
                       Delete
                     </button>
@@ -181,6 +199,33 @@ const UserDashboard = () => {
           isEditing={!!editingTaskId}
         />
       )}
+
+{isDeleteModalOpen && (
+  <div className='fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center'>
+    <div className='bg-gray-800 p-6 rounded-lg shadow-lg text-center'>
+      <h2 className='text-xl font-semibold mb-4'>Confirm Delete</h2>
+      <p className='mb-4'>
+        Are you sure you want to delete this task?
+      </p>
+      <div className='flex justify-center gap-4'>
+        <button
+          onClick={() => {
+            handleDeleteTask(editingTaskId);  // Pass the correct task ID
+            setIsDeleteModalOpen(false);
+          }}
+          className='px-4 py-2 bg-red-600 hover:bg-red-700 rounded-lg text-white font-medium'>
+          Confirm
+        </button>
+        <button
+          onClick={() => setIsDeleteModalOpen(false)}
+          className='px-4 py-2 bg-gray-500 hover:bg-gray-600 rounded-lg text-white font-medium'>
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
     </div>
   );
 };

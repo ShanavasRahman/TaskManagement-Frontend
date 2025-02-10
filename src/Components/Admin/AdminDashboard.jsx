@@ -1,9 +1,10 @@
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import UserContext from "../../utils/userContext";
 import useAuth from "../../utils/useAuth";
 import TaskModal from "./TaskModal";
+import toast from "react-hot-toast";
 
 const AdminDashboard = () => {
   const [users, setUsers] = useState([]);
@@ -56,8 +57,14 @@ const AdminDashboard = () => {
     setSelectedUser(null);
   };
 
-  const handleLogout = () => {
-    logout();
+  const navigate = useNavigate();
+  const handleLogout = async (e) => {
+    const response = await axios.get("http://localhost:3000/logout", {
+      withCredentials: true,
+    });
+    sessionStorage.removeItem("userDetails");
+    toast.success(response.data.message, { position: "top-right" });
+    navigate("/login");
   };
 
   const handleManageTasks = (userId) => {
