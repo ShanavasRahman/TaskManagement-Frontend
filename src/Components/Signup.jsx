@@ -51,7 +51,7 @@ const Signup = () => {
                 password: user.password,
             };
 
-            const response = await axios.post("http://localhost:3000/signup", newUser);
+            const response = await axios.post("https://task-management-backend-eight-kappa.vercel.app/signup", newUser);
 
             toast.success(response.data.message, { position: "top-right" });
             navigate("/login");

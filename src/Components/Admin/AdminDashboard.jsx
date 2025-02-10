@@ -22,7 +22,7 @@ const AdminDashboard = () => {
     const fetchUsers = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/admin/getusers",
+          "https://task-management-backend-eight-kappa.vercel.app/admin/getusers",
           {
             withCredentials: true,
           }
@@ -46,7 +46,7 @@ const AdminDashboard = () => {
 
     try {
       await axios.delete(
-        `http://localhost:3000/admin/deleteuser/${selectedUser._id}`,
+        `https://task-management-backend-eight-kappa.vercel.app/admin/deleteuser/${selectedUser._id}`,
         {
           withCredentials: true,
         }
@@ -62,7 +62,7 @@ const AdminDashboard = () => {
 
   const navigate = useNavigate();
   const handleLogout = async (e) => {
-    const response = await axios.get("http://localhost:3000/logout", {
+    const response = await axios.get("https://task-management-backend-eight-kappa.vercel.app/logout", {
       withCredentials: true,
     });
     sessionStorage.removeItem("userDetails");
