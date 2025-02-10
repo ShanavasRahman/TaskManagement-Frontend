@@ -88,7 +88,31 @@ const AdminDashboard = () => {
     setUsers(users.map((user) => (user._id === updatedUser._id ? updatedUser : user)));
   };
   if (isAuthenticate == null) {
-    return <h1>Loading...</h1>;
+    return (
+      <div className="p-4">
+        <div className="w-full max-w-4xl mx-auto">
+          <div className="w-full border border-gray-300 rounded-lg shadow-md">
+            <div className="animate-pulse">
+              <div className="flex bg-gray-200 p-3 rounded-t-lg">
+                <div className="w-1/4 h-4 bg-gray-300 rounded"></div>
+                <div className="w-1/4 h-4 bg-gray-300 rounded ml-4"></div>
+                <div className="w-1/4 h-4 bg-gray-300 rounded ml-4"></div>
+                <div className="w-1/4 h-4 bg-gray-300 rounded ml-4"></div>
+              </div>
+              
+              {[...Array(5)].map((_, index) => (
+                <div key={index} className="flex p-3 border-t border-gray-300">
+                  <div className="w-1/4 h-4 bg-gray-200 rounded"></div>
+                  <div className="w-1/4 h-4 bg-gray-200 rounded ml-4"></div>
+                  <div className="w-1/4 h-4 bg-gray-200 rounded ml-4"></div>
+                  <div className="w-1/4 h-4 bg-gray-200 rounded ml-4"></div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   if (!isAuthenticate || details?.role !== "admin") {
