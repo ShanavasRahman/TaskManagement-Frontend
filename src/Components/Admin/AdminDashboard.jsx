@@ -5,12 +5,15 @@ import UserContext from "../../utils/userContext";
 import useAuth from "../../utils/useAuth";
 import TaskModal from "./TaskModal";
 import toast from "react-hot-toast";
+import UserModal from "./UserModal";
 
 const AdminDashboard = () => {
   const [users, setUsers] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [showTaskModal, setShowTaskModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [showUserModal, setShowUserModal] = useState(false);
+
 
   const { details,setDetails } = useContext(UserContext);
   const isAuthenticate = useAuth();
@@ -76,7 +79,14 @@ const AdminDashboard = () => {
     setSelectedUser(userId);
     setShowTaskModal(true);
   };
+  const handleEditUser = (user) => {
+    setSelectedUser(user);
+    setShowUserModal(true);
+  };
 
+  const handleUserUpdated = (updatedUser) => {
+    setUsers(users.map((user) => (user._id === updatedUser._id ? updatedUser : user)));
+  };
   if (isAuthenticate == null) {
     return <h1>Loading...</h1>;
   }
@@ -123,11 +133,18 @@ const AdminDashboard = () => {
                       Manage
                     </button>
                   </td>
-                  <td className='py-3 px-4'>
+                  <td className="py-3 px-4 flex justify-center gap-2">
+                    <button
+                      onClick={() => handleEditUser(user)}
+                      className="px-3 py-1 bg-green-500 hover:bg-green-600 rounded text-white"
+                    >
+                      Edit
+                    </button>
                     <button
                       onClick={() => confirmDeleteUser(user)}
-                      className='px-3 py-1 bg-red-600 hover:bg-red-700 rounded text-white font-medium'>
-                      Delete User
+                      className="px-3 py-1 bg-red-600 hover:bg-red-700 rounded text-white"
+                    >
+                      Delete
                     </button>
                   </td>
                 </tr>
@@ -168,6 +185,9 @@ const AdminDashboard = () => {
           onClose={() => setShowTaskModal(false)}
         />
       )}
+
+     {showUserModal && <UserModal user={selectedUser} onClose={() => setShowUserModal(false)} onUserUpdated={handleUserUpdated} />}
+
     </div>
   );
 };
