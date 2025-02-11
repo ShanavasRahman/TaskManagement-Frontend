@@ -10,7 +10,7 @@ const TaskModal = ({ userId, onClose }) => {
     const fetchTasks = async () => {
       try {
         const response = await axios.post(
-          "https://taskmanagement-backend-iv84.onrender.com/displaytask",
+          "https://task-management-backend-eight-kappa.vercel.app/displaytask",
           { id: userId },
           { withCredentials: true }
         );
@@ -36,7 +36,7 @@ const TaskModal = ({ userId, onClose }) => {
   const handleSaveEdit = async (taskId) => {
     try {
       await axios.put(
-        `https://taskmanagement-backend-iv84.onrender.com/updatetask/${taskId}`,
+        `https://task-management-backend-eight-kappa.vercel.app/updatetask/${taskId}`,
         editedTask,
         { withCredentials: true }
       );
@@ -49,7 +49,7 @@ const TaskModal = ({ userId, onClose }) => {
 
   const handleDeleteTask = async (taskId) => {
     try {
-      await axios.delete(`https://taskmanagement-backend-iv84.onrender.com/deletetask/${taskId}`, { withCredentials: true });
+      await axios.delete(`https://task-management-backend-eight-kappa.vercel.app/deletetask/${taskId}`, { withCredentials: true });
       setTasks(tasks.filter((task) => task._id !== taskId));
     } catch (error) {
       console.error("Error deleting task:", error);

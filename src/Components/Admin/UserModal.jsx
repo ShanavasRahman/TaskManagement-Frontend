@@ -17,7 +17,7 @@ const UserModal = ({ user, onClose, onUserUpdated }) => {
     setLoading(true);
     try {
       const response = await axios.put(
-        `https://taskmanagement-backend-iv84.onrender.com/admin/updateuser/${user._id}`,
+        `https://task-management-backend-eight-kappa.vercel.app/admin/updateuser/${user._id}`,
         { name, email, role },
         { withCredentials: true }
       );
